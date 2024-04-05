@@ -1,7 +1,8 @@
+import javax.sql.rowset.BaseRowSet;
 import java.util.Random;
 import java.util.Scanner;
 
-public class ES1 {
+public class Matrici {
     public static void main(String[] args) {
         Scanner in=new Scanner(System.in);
         Random generatore = new Random();
@@ -81,7 +82,7 @@ public class ES1 {
                 System.out.println("La somma della riga "+i+" è "+sommariga[i]);
             }
             //Sesta funzione
-            int [] sommacolonna=new int[m.length];
+            int [] sommacolonna=new int[m[0].length];
             matriceSumsColons(m,sommacolonna);
             for (int i=0;i< sommacolonna.length;i++){
                 System.out.println("La somma della colonna "+i+" è "+sommacolonna[i]);
@@ -100,6 +101,29 @@ public class ES1 {
                 }
                 System.out.println();
             }
+            //Ottava funzione
+            matriceRiempidContraria(m4);
+            for (int i = 0; i < m4.length; i++) {
+                for (int p = 0; p < m4[0].length; p++) {
+                    System.out.print(m4[i][p]+" ");
+                }
+                System.out.println();
+            }
+            //Nona funzione
+            int [][] m5={
+                    {0,15,13,18},
+                    {5,0,54,211},
+                    {5,5,0,163},
+                    {5,5,5,0}
+            };
+            if(sottoLaDiagonale(m5))
+                System.out.println("Ok");
+            else
+                System.out.println("Non ok");
+            if(sottoLaDiagonale(m3))
+                System.out.println("Ok");
+            else
+                System.out.println("Non ok");
         }
     }
     private static void invertiIndiciColonne(int [][] m,int n1,int n2){
@@ -122,10 +146,10 @@ public class ES1 {
         boolean isEquals=true;
         for (int i = 0; i < m[0].length; i++) {
             for (int p = 0; p < m.length; p++) {
-                  if (m[p][i]!=m[i][p]){
-                      isEquals=false;
-                      break;
-                  }
+                if (m[p][i]!=m[i][p]){
+                    isEquals=false;
+                    break;
+                }
             }
         }
         return isEquals;
@@ -156,15 +180,43 @@ public class ES1 {
     }
     //Non va
     private static void matriceRiempid (int [][] m){
-        for (int i = 0; i < m[0].length; i++) {
-            for (int p = i; p < m.length; p++) {
-              m[p][i]=1;
+        for (int i=0;i<m[0].length;i++) {
+            for (int p=i;p<m.length;p++) {
+                m[p][i]=1;
             }
         }
-        for (int i = 0; i < m.length; i++) {
-            for (int p = i+1; p < m[0].length; p++) {
+        for (int i = 0; i < m[0].length; i++) { //Colonna
+            for (int p=0;p<i;p++) { //Riga
                 m[p][i]=0;
             }
         }
+    }
+    private static void matriceRiempidContraria (int [][] m){
+        for (int i=0;i<m[0].length;i++) {
+            for (int p=i;p<m.length;p++) {
+                m[p][i]=0;
+            }
+        }
+        for (int i = 0; i < m[0].length; i++) { //Colonna
+            for (int p=0;p<=i;p++) { //Riga
+                m[p][i]=1;
+            }
+        }
+    }
+    private static boolean sottoLaDiagonale (int [][] m){
+        boolean isEquals=true;
+        for (int i=0;i<m[0].length;i++) {
+            for (int p=i;p<m.length;p++) {
+                if (p!=i){
+                    if (m[p][i]!=m[1][0]){
+                        isEquals=false;
+                        break;
+                    }
+                }
+            }
+            if (!isEquals)
+                break;
+        }
+        return isEquals;
     }
 }
